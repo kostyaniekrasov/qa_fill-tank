@@ -3,7 +3,8 @@
 describe('fillTank', () => {
   const { fillTank } = require('./fillTank');
 
-  it('if the amount is not given, then full tank is ordered', () => {
+  it('should fill the tank to its maximum'
+    + ' capacity if no amount is specified', () => {
     const customer = {
       money: 3000,
       vehicle: {
@@ -17,25 +18,22 @@ describe('fillTank', () => {
     expect(customer.vehicle.fuelRemains).toBe(40);
   });
 
-  it(
-    'If the amount is greater'
-      + ' than the tank can accommodate, pour only what will fit',
-    () => {
-      const customer = {
-        money: 3000,
-        vehicle: {
-          maxTankCapacity: 40,
-          fuelRemains: 8,
-        },
-      };
+  it('should not exceed the tank capacity when'
+    + ' the specified amount is greater than the free space', () => {
+    const customer = {
+      money: 3000,
+      vehicle: {
+        maxTankCapacity: 40,
+        fuelRemains: 8,
+      },
+    };
 
-      fillTank(customer, 2, 50);
+    fillTank(customer, 2, 50);
 
-      expect(customer.vehicle.fuelRemains).toBe(40);
-    }
-  );
+    expect(customer.vehicle.fuelRemains).toBe(40);
+  });
 
-  it('always fill in only what the client can pay', () => {
+  it('should only fill as much fuel as the customer can pay for', () => {
     const customer = {
       money: 30,
       vehicle: {
@@ -49,7 +47,7 @@ describe('fillTank', () => {
     expect(customer.vehicle.fuelRemains).toBe(11);
   });
 
-  it('round the poured amount by discarding number to the tenth part', () => {
+  it('should round the poured fuel amount down to the nearest tenth', () => {
     const customer = {
       money: 30,
       vehicle: {
@@ -63,7 +61,7 @@ describe('fillTank', () => {
     expect(customer.vehicle.fuelRemains).toBe(11.6);
   });
 
-  it('if the poured amount is less than 2 liters, do not pour at all', () => {
+  it('should not pour fuel if the rounded amount is less than 2 liters', () => {
     const customer = {
       money: 30,
       vehicle: {
@@ -77,8 +75,8 @@ describe('fillTank', () => {
     expect(customer.vehicle.fuelRemains).toBe(8);
   });
 
-  it('round the price of the purchased fuel'
-    + 'the to the nearest hundredth part', () => {
+  it('should round the price of the'
+    + ' purchased fuel to the nearest hundredth', () => {
     const customer = {
       money: 305.3,
       vehicle: {
